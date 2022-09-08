@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.zerock.springex.mapper.TodoMapperTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-09-08T08:21:15" hostname="DESKTOP-4A7G9O2" time="1.121">
+  <properties/>
+  <testcase name="testGetTime()" classname="org.zerock.springex.mapper.TodoMapperTests" time="1.121"/>
+  <system-out><![CDATA[05:21:08  INFO [org.springframework.test.context.support.DefaultTestContextBootstrapper] Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+05:21:08  INFO [org.springframework.test.context.support.DefaultTestContextBootstrapper] Using TestExecutionListeners: [org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@191da89b, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@73a1a65c, org.springframework.test.context.support.DependencyInjectionTestExecutionListener@7d1f8b4c, org.springframework.test.context.support.DirtiesContextTestExecutionListener@45f0e7aa, org.springframework.test.context.transaction.TransactionalTestExecutionListener@315dd6ff, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@4fb005ce, org.springframework.test.context.event.EventPublishingTestExecutionListener@4e74a29f]
+05:21:12  INFO [com.zaxxer.hikari.HikariDataSource] HikariPool-1 - Starting...
+05:21:13  INFO [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Added connection org.mariadb.jdbc.Connection@19afeabd
+05:21:13  INFO [com.zaxxer.hikari.HikariDataSource] HikariPool-1 - Start completed.
+05:21:16 DEBUG [org.zerock.springex.mapper.TodoMapper.getTime] ==>  Preparing: select now()
+05:21:16 DEBUG [org.zerock.springex.mapper.TodoMapper.getTime] ==> Parameters: 
+05:21:16 TRACE [org.zerock.springex.mapper.TodoMapper.getTime] <==    Columns: now()
+05:21:16 TRACE [org.zerock.springex.mapper.TodoMapper.getTime] <==        Row: 2022-09-08 17:21:16
+05:21:16 DEBUG [org.zerock.springex.mapper.TodoMapper.getTime] <==      Total: 1
+05:21:16  INFO [org.zerock.springex.mapper.TodoMapperTests] 2022-09-08 17:21:16
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
