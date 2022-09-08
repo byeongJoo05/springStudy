@@ -13,11 +13,11 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 public class TimeMapperTests {
 
     @Autowired(required = false)
-    private TimeMapper timeMapper;
+    private TimeMapper timeMapper2;
 
     @Test
     public void testGetTime() {
 
-        log.info(timeMapper.getTime());
+        log.info(timeMapper2.getTime());
     }
 }
