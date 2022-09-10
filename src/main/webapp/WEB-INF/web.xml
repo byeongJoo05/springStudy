@@ -36,7 +36,6 @@
     <filter>
         <filter-name>encoding</filter-name>
         <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
-<!--TODO: 한글이 안나오네.-->
         <init-param>
             <param-name>encoding</param-name>
             <param-value>UTF-8</param-value>
