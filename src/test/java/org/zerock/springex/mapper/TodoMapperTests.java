@@ -42,4 +42,10 @@ public class TodoMapperTests {
 
         voList.forEach(vo->log.info(vo));
     }
+
+    @Test
+    public void testSelectOne() {
+        TodoVO todoVO = todoMapper.selectOne(2L);
+        log.info(todoVO);
+    }
 }
