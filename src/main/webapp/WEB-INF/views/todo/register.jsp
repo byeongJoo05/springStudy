@@ -43,17 +43,17 @@
           </div>
           <div class="card-body">
             <form action="/todo/register" method="post">
-              <div calss="input-group mb-3">
+              <div class="input-group mb-3">
                 <span class="input-group-text">Title</span>
                 <input type="text" name="title" class="form-control" placeholder="Title">
               </div>
 
-              <div calss="input-group mb-3">
+              <div class="input-group mb-3">
                 <span class="input-group-text">DueDate</span>
                 <input type="date" name="dueDate" class="form-control" placeholder="Writer">
               </div>
 
-              <div calss="input-group mb-3">
+              <div class="input-group mb-3">
                 <span class="input-group-text">Writer</span>
                 <input type="text" name="Writer" class="form-control" placeholder="Writer">
               </div>
