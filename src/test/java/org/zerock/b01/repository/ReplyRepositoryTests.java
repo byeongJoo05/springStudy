@@ -25,7 +25,7 @@ class ReplyRepositoryTests {
     public void testInsert() {
 
         //실제 DB에 있는 bno;
-        Long bno = 102L;
+        Long bno = 100L;
 
         Board board = Board.builder().bno(bno).build();
 
@@ -41,7 +41,7 @@ class ReplyRepositoryTests {
     @Test
     public void testBoardReplies() {
 
-        Long bno = 102L;
+        Long bno = 100L;
 
         Pageable pageable = PageRequest.of(0,10, Sort.by("rno").descending());
 
@@ -50,6 +50,5 @@ class ReplyRepositoryTests {
         result.getContent().forEach(reply -> {
             log.info(reply);
         });
-    }
-
+    };
 }
