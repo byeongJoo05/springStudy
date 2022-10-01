@@ -41,7 +41,7 @@ class ReplyRepositoryTests {
     @Test
     public void testBoardReplies() {
 
-        Long bno = 100L;
+        Long bno = 102L;
 
         Pageable pageable = PageRequest.of(0,10, Sort.by("rno").descending());
 
