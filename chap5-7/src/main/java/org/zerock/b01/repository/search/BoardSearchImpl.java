@@ -9,7 +9,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.zerock.b01.domain.Board;
-import org.zerock.b01.domain.BoardImage;
 import org.zerock.b01.domain.QBoard;
 import org.zerock.b01.domain.QReply;
 import org.zerock.b01.dto.BoardImageDTO;
@@ -21,18 +20,26 @@ import java.util.stream.Collectors;
 
 public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardSearch {
 
-    public BoardSearchImpl() {
+    public BoardSearchImpl(){
         super(Board.class);
     }
 
     @Override
     public Page<Board> search1(Pageable pageable) {
 
-        QBoard board = QBoard.board; //Q도메인 객체
+        QBoard board = QBoard.board;
 
-        JPQLQuery<Board> query = from(board); // select.. from board
+        JPQLQuery<Board> query = from(board);
 
-        query.where(board.title.contains("1")); // where title like ...
+        BooleanBuilder booleanBuilder = new BooleanBuilder(); // (
+
+        booleanBuilder.or(board.title.contains("11")); // title like ...
+
+        booleanBuilder.or(board.content.contains("11")); // content like ....
+
+        query.where(booleanBuilder);
+        query.where(board.bno.gt(0L));
+
 
         //paging
         this.getQuerydsl().applyPagination(pageable, query);
@@ -41,7 +48,9 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
 
         long count = query.fetchCount();
 
+
         return null;
+
     }
 
     @Override
@@ -50,11 +59,11 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
         QBoard board = QBoard.board;
         JPQLQuery<Board> query = from(board);
 
-        if((types!=null && types.length>0) && keyword != null){ //검색 조건과 키워드가 있다면
+        if( (types != null && types.length > 0) && keyword != null ){ //검색 조건과 키워드가 있다면
 
-            BooleanBuilder booleanBuilder = new BooleanBuilder();
+            BooleanBuilder booleanBuilder = new BooleanBuilder(); // (
 
-            for (String type : types) {
+            for(String type: types){
 
                 switch (type){
                     case "t":
@@ -63,23 +72,26 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
                     case "c":
                         booleanBuilder.or(board.content.contains(keyword));
                         break;
-                    case  "w":
+                    case "w":
                         booleanBuilder.or(board.writer.contains(keyword));
                         break;
                 }
-            } //end for
+            }//end for
             query.where(booleanBuilder);
         }//end if
 
-        //bno >0
+        //bno > 0
         query.where(board.bno.gt(0L));
 
         //paging
         this.getQuerydsl().applyPagination(pageable, query);
+
         List<Board> list = query.fetch();
+
         long count = query.fetchCount();
 
-        return new PageImpl<>(list,pageable,count);
+        return new PageImpl<>(list, pageable, count);
+
     }
 
     @Override
@@ -93,11 +105,11 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
 
         query.groupBy(board);
 
-        if((types!=null && types.length >0) && keyword != null){
+        if( (types != null && types.length > 0) && keyword != null ){
 
-            BooleanBuilder booleanBuilder = new BooleanBuilder();
+            BooleanBuilder booleanBuilder = new BooleanBuilder(); // (
 
-            for (String type : types) {
+            for(String type: types){
 
                 switch (type){
                     case "t":
@@ -118,7 +130,12 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
         query.where(board.bno.gt(0L));
 
         JPQLQuery<BoardListReplyCountDTO> dtoQuery = query.select(Projections.bean(BoardListReplyCountDTO.class,
-                board.bno, board.title, board.writer, board.regDate, reply.count().as("replyCount")));
+                board.bno,
+                board.title,
+                board.writer,
+                board.regDate,
+                reply.count().as("replyCount")
+        ));
 
         this.getQuerydsl().applyPagination(pageable,dtoQuery);
 
@@ -131,17 +148,18 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
 
     @Override
     public Page<BoardListAllDTO> searchWithAll(String[] types, String keyword, Pageable pageable) {
-        QBoard board= QBoard.board;
-        QReply reply= QReply.reply;
+
+        QBoard board = QBoard.board;
+        QReply reply = QReply.reply;
 
         JPQLQuery<Board> boardJPQLQuery = from(board);
         boardJPQLQuery.leftJoin(reply).on(reply.board.eq(board)); //left join
 
-        if((types!=null && types.length>0) && keyword !=null){
+        if( (types != null && types.length > 0) && keyword != null ){
 
-            BooleanBuilder booleanBuilder = new BooleanBuilder();
+            BooleanBuilder booleanBuilder = new BooleanBuilder(); // (
 
-            for (String type : types) {
+            for(String type: types){
 
                 switch (type){
                     case "t":
@@ -162,6 +180,8 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
 
         getQuerydsl().applyPagination(pageable, boardJPQLQuery); //paging
 
+
+
         JPQLQuery<Tuple> tupleJPQLQuery = boardJPQLQuery.select(board, reply.countDistinct());
 
         List<Tuple> tupleList = tupleJPQLQuery.fetch();
@@ -169,7 +189,7 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
         List<BoardListAllDTO> dtoList = tupleList.stream().map(tuple -> {
 
             Board board1 = (Board) tuple.get(board);
-            long replyCount = tuple.get(1, Long.class);
+            long replyCount = tuple.get(1,Long.class);
 
             BoardListAllDTO dto = BoardListAllDTO.builder()
                     .bno(board1.getBno())
@@ -188,13 +208,32 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
                             .build()
                     ).collect(Collectors.toList());
 
-            dto.setBoardImages(imageDTOS); //처리된 BoardImageDTO들을 추가
+            dto.setBoardImages(imageDTOS);
 
             return dto;
         }).collect(Collectors.toList());
 
         long totalCount = boardJPQLQuery.fetchCount();
 
+
         return new PageImpl<>(dtoList, pageable, totalCount);
     }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

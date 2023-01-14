@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.List;
 
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,5 +25,7 @@ public class BoardListAllDTO {
 
     private Long replyCount;
 
+
     private List<BoardImageDTO> boardImages;
+
 }

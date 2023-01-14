@@ -14,12 +14,11 @@ import java.util.Set;
 @NoArgsConstructor
 @ToString(exclude = "imageSet")
 public class Board extends BaseEntity{
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bno;
 
-    @Column(length = 500, nullable = false) //칼럼의 길이와 null 허용 여부
+    @Column(length = 500, nullable = false) //컬럼의 길이와 null허용여부
     private String title;
 
     @Column(length = 2000, nullable = false)
@@ -28,20 +27,21 @@ public class Board extends BaseEntity{
     @Column(length = 50, nullable = false)
     private String writer;
 
-    public void change(String title, String content) {
+    public void change(String title, String content){
         this.title = title;
         this.content = content;
     }
 
-    @OneToMany(mappedBy = "board", //BoardImage의 board변수
-    cascade = {CascadeType.ALL},
-    fetch = FetchType.LAZY,
-    orphanRemoval = true)
+
+    @OneToMany(mappedBy = "board",
+            cascade = {CascadeType.ALL},
+            fetch = FetchType.LAZY,
+            orphanRemoval = true)
     @Builder.Default
     @BatchSize(size = 20)
     private Set<BoardImage> imageSet = new HashSet<>();
 
-    public void addImage(String uuid, String fileName) {
+    public void addImage(String uuid, String fileName){
 
         BoardImage boardImage = BoardImage.builder()
                 .uuid(uuid)
@@ -53,8 +53,10 @@ public class Board extends BaseEntity{
     }
 
     public void clearImages() {
+
         imageSet.forEach(boardImage -> boardImage.changeBoard(null));
 
         this.imageSet.clear();
     }
+
 }
