@@ -22,6 +22,29 @@ spring:
       max-request-size: 30MB
       max-file-size: 10MB
 
+  security:
+    oauth2:
+      client:
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            user-name-attribute: id
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+        registration:
+          kakao:
+            client-name: kakao
+            authorization-grant-type: authorization_code
+            redirect-uri: http://localhost/login/oauth2/code/kakao
+            client-id: 1f91721cfe04792e5676f2b0424e5a77
+
+            client-secret: kfUcGGXuGkATLTEb5KfM6ckDyOMtv0mc
+            client-authentication-method: POST
+            scope:
+              - profile_nickname
+              - account_email
+
+
 logging:
   level:
     org:
