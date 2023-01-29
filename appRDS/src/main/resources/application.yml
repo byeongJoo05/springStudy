@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://zerock-database1.cprvvmdiaiq8.ap-northeast-2.rds.amazonaws.com:3306/webdb?serverTimezone=Asia/Seoul
+    username: webuser
+    password: webuser
+
+    hikari:
+      minimum-idle: 1
+      maximum-pool-size: 2
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+
+logging:
+  level:
+    org:
+      springframework: info
+      zerock: debug
+      springframework.security: trace
