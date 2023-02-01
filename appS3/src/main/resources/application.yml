@@ -1,0 +1,24 @@
+cloud:
+  aws:
+    credentials:
+      access-key:
+      secret-key:
+    s3:
+      bucket: zerockexample-s3-bucket
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+
+org:
+  zerock:
+    upload:
+      path: c:\\upload
+
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      location: C:\\upload
+      max-request-size: 30MB
+      max-file-size: 10MB
