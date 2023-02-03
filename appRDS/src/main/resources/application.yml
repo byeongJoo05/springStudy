@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://zerock-database1.cprvvmdiaiq8.ap-northeast-2.rds.amazonaws.com:3306/webdb?serverTimezone=Asia/Seoul
+    url: 아마존 RDS url
     username: webuser
     password: webuser
 
